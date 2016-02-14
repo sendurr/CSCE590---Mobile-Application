@@ -1,0 +1,150 @@
+body {
+    width: 1506px;
+    height: 2000px;
+    font:Arial;
+    background: url(q5_background.png) ;
+    background-size: 1506px 100%;
+    background-repeat:no-repeat;
+    }
+
+.header{
+    background: rgba(244,244,244,0.95);
+    width: 100%;
+    height: 200px;
+    top: 0;
+    position: fixed;
+    text-align:center;
+    font-size: 2.5em;
+    font-weight: bold;
+    line-height: 2.5em;
+    z-index:1000;
+    border-style: ridge;
+    margin-left: -10px;
+    overflow: hidden;
+    background: url(q5_head.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+#navlist1 {
+    position: relative;
+    background: none;
+    top: 250px;
+    height: 200px;
+    left:100px;
+}
+
+#navlist1 li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+
+}
+
+#navlist1 li, #navlist1 a {
+    height: 200px;
+    display: block;
+}
+
+#nav1_elem_1 {
+    left: 0px;
+    width: 200px;
+    background: url('q4_doc_close.png');
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    border-radius: 100px;
+}
+
+#nav1_elem_2 {
+    left: 250px;
+    width: 600px;
+    font-size: 2.5em;
+    font-weight: bold;
+    color:white;
+    }
+    
+#Doc_name {
+    padding-top:70px;
+    }
+
+.footer{
+    background: none;
+    width: 1506px;
+    height: 400px;
+    bottom:480px;
+    position: fixed;
+    font-size: 2.5em;
+    font-weight: bold;
+    line-height: 2.5em;
+    z-index:1000;
+    border-style: none;
+    margin-left: -10px;
+    display: table;
+    table-layout: fixed;
+    }
+
+.footer div{
+    display: table-cell;
+    height:100%;
+    }
+    
+.foot_button_col1{
+    position:relative;
+    width:200px;
+    height:200px;
+    left: 18%;
+    bottom:-50px;
+    background: url(q4_p2.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    border-radius:50%;
+    }
+
+.foot_button_col2{
+    position:relative;
+    width:200px;
+    height:200px;
+    left: 18%;
+    bottom:-50px;
+    background: url(q4_p3.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    border-radius:50%;
+    }
+.foot_button_col3{
+    position:relative;
+    width:200px;
+    height:200px;
+    left: 18%;
+    bottom:-50px;
+    background: url(q4_p4.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    border-radius:50%;
+    }
+
+.foot_button_col4{
+    position:relative;
+    width:200px;
+    height:200px;
+    left: 18%;
+    bottom:-50px;
+    background: url(q4_p5.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    border-radius:50%;
+    }
+
+.foot_button_col5{
+    position:relative;
+    width:300px;
+    height:300px;
+    float:right;
+    top:100px;
+    background: url(q5_end_pic.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    border-left-color:white;
+    border-right-color:white;
+    }

@@ -1,0 +1,93 @@
+<!-- ****************************************************************
+    CSCE 590 - Mobile Application Development
+        Homework 1 - Question 1
+        Author : Sendurr Selvaraj
+        E-mail : sendurr@email.sc.edu
+        
+*********************************************************************//-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<html>
+
+<head>
+    <title>Homework Question 1</title>
+    <link rel="stylesheet" type="text/css" href="./quest1.css"/>
+    
+  <!--  <link rel="stylesheet" href="styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="styles/kendo.material.min.css" />
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script> /-->
+    
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.common.min.css"/>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.rtl.min.css"/>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.silver.min.css"/>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.mobile.all.min.css"/>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2016.1.112/js/kendo.all.min.js"></script>
+    
+
+</head>
+
+<body>
+
+    <div class="header">
+        <input type="image" src="q1_p2.png" alt="Back" style="width:100px;height:100px;float:left;">
+        <p style="display:inline">Add Homework</p>
+        <input type="image"  src="q1_p1.png" alt="Back" style="width:90px;height:90px; float: right;">
+    </div>
+    <form>
+        <select  name="course" id="course_ip">
+            <option value="course 1">CSCE 206: Scientific Application Programming</option>
+        </select>
+        <input type="text" name="hmwrk" id="hmwrk_ip" placeholder ="Homework Name" />
+        <div class="class_due"> Due Datetime </div>
+        <div id="example">
+            <div class="demo-section k-content">
+                <input id="datetimepicker" />
+            </div>
+            <script>
+                $(document).ready(function () {
+                    // create DateTimePicker from input HTML element
+                    $("#datetimepicker").kendoDateTimePicker({
+                        value:new Date()
+                    });
+                });
+            </script>
+        </div>
+        <div class="class_prio"> Set Priority </div>
+        <div class="class_rang">
+            <input type="range"" min="0" max="100" value="0">
+        </div>
+            <div class="class_cal"> Pick Calendar Color <input id="picker" />
+            <script>
+                $("#picker").kendoColorPicker({
+                    value: "#ffffff",
+                    buttons: false
+                });
+            </script>
+        </div>
+        <div class="class_des"> Description </div>
+        <input type="text" name="dec_box" id="dec_box"  />
+    </form>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ****************** End of Program ****************************** -->

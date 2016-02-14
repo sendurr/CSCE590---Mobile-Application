@@ -1,0 +1,267 @@
+body {
+    width: 100%;
+    height: 2000px;
+    font:Arial;
+    }
+
+.header{
+    background: rgba(244,244,244,0.95);
+    width: 100%;
+    height: 100px;
+    top: 0;
+    position: fixed;
+    text-align:center;
+    font-size: 2.5em;
+    font-weight: bold;
+    line-height: 2.5em;
+    z-index:1000;
+    border-style: ridge;
+    margin-left: -10px;
+    overflow: hidden;
+    }
+.footer{
+    background: rgba(244,244,244,0.95);
+    width: 100%;
+    height: 150px;
+    bottom:0px;
+    position: fixed;
+    text-align:center;
+    font-size: 2.5em;
+    font-weight: bold;
+    line-height: 2.5em;
+    z-index:1000;
+    border-style: ridge;
+    margin-left: -10px;
+    }
+
+.tbl{
+    width:100%;
+    border = 0;
+    }
+
+#img_head{
+    width :40px;
+    height: 40px;
+    padding-left: 0.1px;
+    }
+    
+.button_lh{
+    width: 150px;
+    height: 80px;
+    padding-left: 0.1px;
+    font-size: 0.8em;
+    text-align: center;
+    border-radius: 15px;
+    color:rgb(0, 122, 255);
+    }
+
+.button_rh{
+    width: 150px;
+    height: 80px;
+    padding-left: 0.1px;
+    font-size: 0.8em;
+    text-align: center;
+    border-radius: 15px;
+    color:rgb(0, 122, 255);
+    }
+.button_2line_1{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 0px;
+    border-radius: 15px;
+    background: url(q2_p1.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+    
+.button_2line_2{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 100px;
+    border-radius: 15px;
+    background: url(q2_p2.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+.button_2line_3{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 200px;
+    border-radius: 15px;
+    background: url(q2_p3.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+.button_2line_4{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 300px;
+    border-radius: 15px;
+    background: url(q2_p4.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+.button_2line_5{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 400px;
+    border-radius: 15px;
+    background: url(q2_p5.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+.button_2line_6{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 500px;
+    border-radius: 15px;
+    background: url(q2_p6.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+.button_2line_7{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 600px;
+    border-radius: 15px;
+    background: url(q2_p7.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+.button_2line_8{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 700px;
+    border-radius: 15px;
+    background: url(q2_p8.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+.button_2line_9{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 800px;
+    border-radius: 15px;
+    background: url(q2_p9.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+.button_2line_10{
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 110px;
+    margin-left: 900px;
+    border-radius: 15px;
+    background: url(q2_p10.png) ;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+    }
+
+#list_element {
+    position: absolute;
+    padding: 0;
+    top: 210px;
+    width:100%;
+    color:rgb(0, 122, 255);
+    list-style-type: none;
+    }
+
+.Button_lsit_1{
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    top: -40px;
+    margin-left: -8px;
+    font-size:1.5em;
+    }  
+
+.Button_lsit_2{
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    top: 40px;
+    margin-left: -8px;
+    font-size:1.5em;
+    }  
+
+.button_bottom1{
+    width: 20%;
+    height: 150px;
+    border-style:hidden;
+    margin-left: -50px;
+    }
+.button_bottom12{
+    width: 21% 40%;
+    height: 150px;
+    border-style:hidden;
+    margin-left: -50px;
+    }
+    
+.button_bottom3{
+    width: 41% 60%;
+    height: 150px;
+    border-style:hidden;
+    margin-left: -50px;
+    }
+
+.button_bottom4{
+    width: 61% 80%;
+    height: 150px;
+    border-style:hidden;
+    margin-left: -50px;
+    }
+
+.button_bottom5{
+    width: 21% 100%;
+    height: 150px;
+    border-style:hidden;
+    margin-left: -50px;
+    }
+    
+
+
+#list_bottom {
+    text-align: justify;
+    
+    
+}
+#list_bottom:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+}
+#list_bottom li {
+    display: inline-block;
+}
+
+#img_foot{
+    width :100px;
+    height: 100px;
+    }
