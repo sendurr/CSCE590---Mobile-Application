@@ -1,0 +1,31 @@
+{
+  "name": "GiftAid Product Importer",
+  "version": "1.0",
+//  "minimum_chrome_version": "9",
+  "manifest_version": 2,
+  "description": "Imports product detials into GiftAid database",
+  "icons": {
+    "16": "image_gift.png"
+  },
+  "browser_action": {
+    "default_title":"GiftAid",
+    "default_icon":"image_gift.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+"content_scripts": [
+  {
+  "matches": ["https://www.amazon.com/gp/cart/*"],
+  "js": ["giftaid.js"]
+  }
+],
+//  "option_page":"options.html",
+  "permissions":[
+    "background",
+    "tabs",
+    "activeTab",
+    "http://*/*",
+    "https://*/*"
+  ]
+}

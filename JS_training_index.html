@@ -13,13 +13,13 @@
         var age = 26;
         document.write("This is my age " + age);
         function f1() {
-            alert("Wait! - Il call function2");
+            var string1 = prompt("Enter your Name :", " ");
             
-            f2();
+            f2(string1);
         }
         
-        function f2() {
-              document.write("You hit the function!");
+        function f2(ip_string) {
+            document.write("Hi," + ip_string);
              console.log("You hit the function!");
         }
         //-->

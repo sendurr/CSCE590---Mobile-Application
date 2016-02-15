@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Kendo UI Snippet</title>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.rtl.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.silver.min.css" />
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.112/styles/kendo.mobile.all.min.css" />
+
+
+    <link rel="stylesheet" href="css/sky-forms.css">
+
+</head>
+
+<body>
+    
+    <div data-role="view" id="login">
+        <header data-role="header">
+            <div data-role="navbar">
+                USCAPP
+            </div>
+        </header>
+        <form name='loginform' class="sky-form">
+            <center>
+                <img src="image/logo.png" alt="image" style="width:64px" class="centerimage" />
+            </center>
+            <div id="login_waiting"></div>
+            <fieldset>
+                <section>
+                    <div class="row">
+                        <a data-role="button" id="login" onclick="loginFacebook();" style="width:95%">Log in via Facebook</a>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <div>
+                            <label class="input">
+                                <i class="icon-append icon-envelope-alt"></i>
+                                <input type="input" id="email" placeholder="Email" data-bind="value: email">
+                                <!-- data-value-update="keyup" -->
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <label class="input">
+                                <i class="icon-append icon-lock"></i>
+                                <input type="password" id="password" placeholder="password" data-value-update="keyup" data-bind="value: password">
+                                <!-- data-value-update="keyup" -->
+                            </label>
+                            <div class="note"><a href="#passwordreset">Forgot password?</a>
+                            </div>
+                            <span id="login_popupNotification" style="display:none;"></span>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="row">
+                        <!-- <div class="col col-8"> -->
+                        <label class="checkbox">
+                            <input type="checkbox" name="checkbox-inline" data-bind="checked: savepassword"><i></i>Keep me logged in</label>
+                        <!-- </div> -->
+                    </div>
+                </section>
+                <section>
+                    <!-- class="center-wrapper" -->
+                    <div class="row">
+                        <a data-role="button" data-align="left" id="login" data-bind="click: logIn">Log in</a>
+                        <a data-role="button" data-align="right" onclick="register();">Register</a>
+                    </div>
+                </section>
+            </fieldset>
+        </form>
+        <div id="login_status"></div>
+        <span id="notifyuser" style="display:none;"></span>
+    </div>
+    <script type="text/javascript">
+    var viewModelLogin = kendo.observable({
+        email: '', //"siri@gespim.com"
+        password: '', //"hdd"
+        savepassword: true,
+        // email: "stockwow@gmail.com",
+        // password:"hddsgdhd",
+        logIn: function() {
+
+
+
+            // checkAppVersion();
+            var email = this.get("email").toLowerCase().trim();
+            var password = this.get("password");
+            var savepassword = this.get("savepassword");
+
+            app.navigate("#profile");
+            return;
+
+            if (email == "" && gUsername != "") {
+                email = gUsername;
+            }
+            if (password == "" && gPassword != "") {
+                password = gPassword;
+            }
+
+            kendo.ui.progress($("#login_waiting"), true);
+
+            Parse.Config.get().then(function(config) {
+                gAppConfig = Parse.Config.current();
+                gMinAppVerion = gAppConfig.get("gMinAppVersion");
+                if (gAppVersion < gMinAppVerion) {
+                    // Parse.User.logOut();
+                    // app.navigate("#login");
+                    console.log("You need to upgrade your app now");
+                    upgradeAppMust();
+                } else {
+                    console.log("version check done..." + email);
+
+
+                    Parse.User.logIn(email, password, {
+                        success: function(user) {
+
+
+
+                        },
+                        error: function(user, error) {
+                            kendo.ui.progress($("#login_waiting"), false);
+                            gNotification.show({
+                                title: "Login failed!",
+                                message: "check password/email or internet connection"
+                            }, "error");
+
+                            return;
+                        }
+                    });
+
+                }
+            }, function(error) {
+                // Something went wrong (e.g. request timed out)
+            });
+
+
+
+        }
+
+    });
+    kendo.bind($("#login"), viewModelLogin);
+    </script>
+    <script type="text/javascript">
+    function register() {
+        app.navigate("#signup", "slide:left");
+    }
+
+
+    function loginFacebook() {
+
+        Parse.FacebookUtils.logIn(null, {
+            // FB.init({
+            success: function(user) {
+                if (!user.existed()) {
+                    alert("User signed up and logged in through Facebook!");
+                } else {
+                    alert("User logged in through Facebook!");
+                }
+            },
+            error: function(user, error) {
+                alert("User cancelled the Facebook login or did not fully authorize.");
+            }
+        });
+    }
+    </script>
+    <!-- for notification to users -->
+    <script id="hintTemplate" type="text/x-kendo-template">
+        <div class="new-hint">
+            <img src="image/envelope.png" />
+            <h3>#= title #</h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+    <script id="emailTemplate" type="text/x-kendo-template">
+        <div class="new-mail">
+            <img src="image/envelope.png" />
+            <h3>#= title #</h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+    <script id="errorTemplate" type="text/x-kendo-template">
+        <div class="wrong-pass">
+            <img src="image/error-icon.png" />
+            <h3>#= title #</h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+    <script id="successTemplate" type="text/x-kendo-template">
+        <div class="success">
+            <img src="image/success-icon.png" />
+            <h3>#= message #</h3>
+        </div>
+    </script>
+    <script>
+    var gNotification;
+    $(document).ready(function() {
+
+        gNotification = $("#notifyuser").kendoNotification({
+            position: {
+                pinned: true,
+                bottom: 10,
+                right: 10,
+            },
+            // height: 200,
+            // width:200,
+            // autoHideAfter: 0,
+            autoHideAfter: 3000,
+            stacking: "up",
+            templates: [{
+                type: "info",
+                template: $("#emailTemplate").html()
+            }, {
+                type: "error",
+                template: $("#errorTemplate").html()
+            }, {
+                type: "success",
+                template: $("#successTemplate").html()
+            }, {
+                type: "hint",
+                template: $("#hintTemplate").html()
+            }]
+
+        }).data("kendoNotification");
+    });
+
+    // $("#button_notifyuser").click(function(){
+    //     gNotification.show({
+    //         title: "New E-mail",
+    //         message: "You have 1 new mail message!"
+    //     }, "info");
+    // });
+    </script>
+    <style>
+    .k-notification {
+        border: 0;
+    }
+    /* Info template */
+    
+    .k-notification-info.k-group {
+        background: rgba(0%, 60%, 30%, .7);
+        color: #fff;
+    }
+    
+    .new-mail {
+        width: 250px;
+        height: 200px;
+    }
+    
+    .new-mail h3 {
+        font-size: 1em;
+        padding: 3px 2px 5px;
+    }
+    
+    .new-mail img {
+        float: left;
+        margin: 3px 5px 3px 3px;
+    }
+    
+    .k-notification-hint.k-group {
+        background: rgba(0%, 60%, 0%, .7);
+        color: #fff;
+    }
+    
+    .new-hint {
+        width: 250px;
+        height: 150px;
+    }
+    
+    .new-hint h3 {
+        font-size: 1em;
+        padding: 3px 2px 5px;
+    }
+    
+    .new-hint img {
+        float: left;
+        margin: 3px 5px 3px 3px;
+    }
+    /* Error template */
+    
+    .k-notification-error.k-group {
+        background: rgba(100%, 0%, 0%, .7);
+        color: #ffffff;
+    }
+    
+    .wrong-pass {
+        width: 250px;
+        height: 200px;
+    }
+    
+    .wrong-pass h3 {
+        font-size: 1em;
+        padding: 3px 2px 5px;
+    }
+    
+    .wrong-pass img {
+        float: left;
+        margin: 3px 5px 3px 3px;
+    }
+    /* Success template */
+    
+    .k-notification-success.k-group {
+        background: rgba(0%, 60%, 0%, .7);
+        color: #fff;
+    }
+    
+    .success {
+        width: 250px;
+        height: 150px;
+        padding: 0 5px;
+        line-height: 100px;
+    }
+    
+    .success h3 {
+        font-size: 1.7em;
+        font-weight: normal;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    .success img {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    </style>
+    <!-- end notification to users -->
+    <script type="text/javascript">
+    var gUsername = "";
+    var gPassword = "";
+    $(document).ready(function() {
+        //set up the previously used login info
+        // if (localStorage.getItem('vi')) {
+        //     gUsername = localStorage.getItem('vi'); //sessionStorage for one session variable store
+        //     gUsername = CryptoJS.AES.decrypt(gUsername, "xxxxx").toString(CryptoJS.enc.Utf8);
+        //     $("#email").val(gUsername);
+        //     console.log("get username.." + gUsername);
+        // } else {
+        //     gUsername = "";
+        // }
+        // if (localStorage.getItem('qi')) {
+        //     gPassword = localStorage.getItem('qi'); //sessionStorage for one session variable store
+        //     gPassword = CryptoJS.AES.decrypt(gPassword, "xxxxx").toString(CryptoJS.enc.Utf8);
+        //     $("#password").val(gPassword);
+        //     console.log("get password.." + gPassword);
+        // } else {
+        //     gPassword = "";
+        // }
+
+        // $("#email").focus();
+
+
+    });
+
+    function onShow(e) {
+        if (!$("." + e.sender._guid)[1]) {
+            var element = e.element.parent(),
+                eWidth = element.width(),
+                eHeight = element.height(),
+                wWidth = $(window).width(),
+                wHeight = $(window).height(),
+                newTop, newLeft;
+
+            newLeft = Math.floor(wWidth / 2 - eWidth / 2);
+            newTop = Math.floor(wHeight / 2 - eHeight / 2);
+
+            e.element.parent().css({
+                top: newTop,
+                left: newLeft
+            });
+        }
+    }
+    </script>
+    <div data-role="view" id="signup">
+        <header data-role="header">
+            <div data-role="navbar">
+                <a data-align="left" data-role="backbutton" class="nav-button" href="#login"></a>
+                Sign Up
+            </div>
+        </header>
+        <form class="sky-form">
+            <fieldset>
+                <section>
+                    I am a
+                    <a data-align="left" class="selected-button" onclick="selectCustomer();" data-role="button" style="background:yellow" id="customersignup">Customer</a>
+                    <a data-align="right" onclick="selectProfessional();" data-role="button" id="prosignup">Service Provider</a>
+                </section>
+                <section>
+                    <label class="input">
+                        <input type="text" data-bind="value: firstname" placeholder="First name">
+                        <b class="tooltip tooltip-bottom-right">your real name</b>
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        <input type="text" data-bind="value: lastname" placeholder="Last name">
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        <i class="icon-append icon-envelope-alt"></i>
+                        <input type="text" data-bind="value: email" placeholder="Email address" id="register_email">
+                        <b class="tooltip tooltip-bottom-right">For receiving receipt</b>
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        <i class="icon-append icon-phone "></i>
+                        <input type="text" data-bind="value: phone" placeholder="phone" id="register_phone">
+                        <b class="tooltip tooltip-bottom-right">for service provider to contact you</b>
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        <i class="icon-append icon-lock"></i>
+                        <input type="password" data-bind="value: password" placeholder="Password">
+                        <b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
+                    </label>
+                </section>
+                <section>
+                    <label>
+                        <input type="checkbox" name="checkbox" id="checkbox_terms">I agree to the
+                        <a href="#terms">Terms of Service</a> and <a href="#privacy"> Privacy Policy</a>
+                    </label>
+                    <!-- <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>I want to receive news and  special offers</label> -->
+                </section>
+                <!-- <footer> -->
+                <div style="float:left">
+                    <a data-align="left" data-bind="click: signUp" data-role="button">Sign Up</a>
+                </div>
+                <!-- </footer> -->
+            </fieldset>
+        </form>
+    </div>
+
+
+    <div data-role="layout" data-id="mobile-tabstrip">
+        <div data-role="footer">
+            <div data-role="tabstrip">
+                <a href="#profile" data-icon="contacts">Profile
+        </a><a href="#sales" data-icon="history">Sales
+        </a><a href="#Ratings" data-icon="favorites">Rating
+        </a><a href="#settings" data-icon="settings">Settings</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div data-role="view" id="sales" data-layout="mobile-tabstrip" data-after-show="loadsales" data-init="init_sales">
+        <header data-role="header">
+            <div data-role="navbar"><a data-align="left" data-role="button" class="nav-button" href="">Back</a> Sales
+            </div>
+        </header>
+        <form class="sky-form">
+            <fieldset>
+                <section>
+                    <label class="select">
+                        <select id="selectCourse">
+                            <option value="0" selected disabled>Choose Course</option>
+                            <option value="0">CSCE206</option>
+                        </select>
+                        <i></i>
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        <h4>pick color for classTable</h4>
+                        <input type="color" id="color" data-bind="value: color" value="#00ccff">
+                    </label>
+                </section>
+            </fieldset>
+            <center>
+                <button type="submit" data-role="button" onclick="submitSales();">Add</button>
+            </center>
+            <!-- <button type="submit" data-role="button" data-bind="events:{ click: addme}">add</button> -->
+        </form>
+    </div>
+    <script type="text/javascript">
+
+    function init_sales (argument) {
+        console.log("init sales");
+        // body...
+    }
+    function loadsales() {
+
+        console.log("load sales");
+    }
+
+    function submitSales(argument) {
+        // body...
+        console.log("submit sales");
+    }
+    </script>
+    <!-- view for add homework -->
+    <div data-role="view" id="Ratings" data-layout="mobile-tabstrip">
+        <header data-role="header">
+            <div data-role="navbar"><a data-align="left" data-role="button" class="nav-button" href="#">Back</a> Ratings
+            </div>
+        </header>
+        <form class="sky-form">
+            <fieldset>
+                <section>
+                    <label class="select">
+                        <select id="selectCourse_addhomework" data-bind="value:courseID">
+                            <option value="0" selected disabled>Choose Course</option>
+                            <!-- <option value="0" >CSCE206</option> -->
+                        </select>
+                        <i></i>
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        <input type="text" placeholder="Homework name" id='name' data-bind="value:name">
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        <input type="number" placeholder="priority" id='priority' data-bind="value:priority">
+                        <!-- <input type="number" value="20" /> -->
+                        <!-- <input type="range" name="points" id="points" value="10" min="1" max="10" data-show-value="true" data-hightlight="true"> -->
+                    </label>
+                </section>
+                <section>
+                    <label class="input"> Due datetime </label>
+                    <!-- <input type="text" data-role="date" placeholder="due date" id='duedate'> -->
+                    <input id="datetimepicker" style="width:200px;" data-bind="value:duedate" />
+                </section>
+                <script>
+                $(document).ready(function() {
+                    // create DateTimePicker from input HTML element
+                    $("#datetimepicker").kendoDateTimePicker({
+                        value: new Date()
+                    });
+                });
+                </script>
+                <section>
+                    <label class="label">Description</label>
+                    <label class="textarea textarea-resizable">
+                        <textarea rows="3" id="description" data-bind="value:description"></textarea>
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        pick color
+                        <input type="color" id="color" data-bind="value: color" value="#00ccff">
+                    </label>
+                </section>
+                <section data-bind="visible:initcourse">
+                </section>
+            </fieldset>
+            <button type="submit" data-role="button" data-bind="click: addme">Add</button>
+            <!-- <button type="submit" data-role="button" data-bind="events:{ click: addme}">add</button> -->
+        </form>
+    </div>
+    <!-- end of add homework -->
+    <div data-role="view" id="profile" data-layout="mobile-tabstrip">
+        <header data-role="header">
+            <div data-role="navbar">
+                <!-- <a data-align="left" data-role="button" class="nav-button" href="#">Back</a> -->
+                Profile</div>
+        </header>
+        profile information
+    </div>
+    <div data-role="view" id="settings" data-layout="mobile-tabstrip">
+        <header data-role="header">
+            <div data-role="navbar"><a data-align="right" data-role="button" class="nav-button" href="#editsetting">Edit</a> Settings
+            </div>
+        </header>
+        <form class="sky-form">
+            <fieldset>
+                <section>
+                    <label class="select">
+                        <select id="selectCourse_addhomework" data-bind="value:courseID">
+                            <option value="0" selected disabled>Choose Course</option>
+                            <!-- <option value="0" >CSCE206</option> -->
+                        </select>
+                        <i></i>
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        <input type="text" placeholder="Homework name" id='name' data-bind="value:name">
+                    </label>
+                </section>
+                <section>
+                    <label class="input">
+                        <input type="number" placeholder="priority" id='priority' data-bind="value:priority">
+                        <!-- <input type="number" value="20" /> -->
+                        <!-- <input type="range" name="points" id="points" value="10" min="1" max="10" data-show-value="true" data-hightlight="true"> -->
+                    </label>
+                </section>
+                <section>
+                    <label class="label">Description</label>
+                    <label class="textarea textarea-resizable">
+                        <textarea rows="3" id="description" data-bind="value:description"></textarea>
+                    </label>
+                </section>
+            </fieldset>
+            <button type="submit" data-role="button" data-bind="click: addme">Add</button>
+            <!-- <button type="submit" data-role="button" data-bind="events:{ click: addme}">add</button> -->
+        </form>
+    </div>
+    <!-- end of add homework -->
+    <style scoped>
+    .km-android .km-tabstrip a {
+        color: #a8a8a8;
+    }
+    
+    .km-android .km-tabstrip .km-text {
+        text-indent: 0;
+        height: 3.7rem;
+        margin-top: -2.5rem;
+        padding-top: 1.8rem;
+        font-size: 1em;
+    }
+    </style>
+    <script>
+    var app = new kendo.mobile.Application(document.body, {});
+    </script>
+</body>
+
+</html>
