@@ -47,4 +47,51 @@ angular.module('starter.services', [])
       return null;
     }
   };
-});
+})
+
+.factory('Products', function() {
+  // Might use a resource here that returns a JSON array
+
+  // Some fake testing data
+  var products = [{
+    id: 0,
+    prod_name: '',
+    quantity: '',
+    price: '',
+    category: '',
+    order_date: ''
+  }];
+
+  var reset=1;
+
+  return {
+    all: function() {
+      return products;
+    },
+    remove: function(product) {
+      products.splice(products.indexOf(product), 1);
+    },
+    addproduct:function(prod,quan,pric,cat,date){
+      products.push({
+        id:products.length,
+        prod_name: prod,
+        quantity: quan,
+        price: pric,
+        category: cat,
+        order_date: date
+      })
+    },
+    get: function(productId) {
+      for (var i = 0; i < products.length; i++) {
+        if (products[i].id === parseInt(productId)) {
+          return products[i];
+        }
+      }
+      return null;
+    }
+  };
+})
+
+
+
+;

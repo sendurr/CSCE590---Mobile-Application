@@ -20,6 +20,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
   });
 })
 
@@ -38,7 +39,39 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/tabs.html'
   })
 
+
   // Each tab has its own nav history stack:
+
+  .state('tab.products', {
+  url: '/products',
+  views: {
+    'tab-products': {
+        templateUrl: 'templates/products.html',
+       controller: 'productsCtrl'
+      }
+    }
+  })
+
+  .state('tab.addproduct', {
+    url: '/addproduct',
+    views: {
+      'tab-products': {
+        templateUrl: 'templates/addproduct.html',
+        controller: 'addproductCtrl'
+      }
+    }
+  })
+
+  .state('tab.productdetail', {
+    url: '/products/:productId',
+    views: {
+      'tab-products': {
+        templateUrl: 'templates/productdetail.html',
+        controller: 'productdetailCtrl'
+      }
+    }
+  })
+
 
   .state('tab.dash', {
     url: '/dash',

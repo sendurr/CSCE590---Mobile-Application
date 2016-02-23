@@ -1,0 +1,58 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="Add Products" ng-controller="addproductCtrl as controller">
+
+<!-- <ion-nav-buttons side="left">
+            <button
+                class="button button-icon icon ion-navicon"
+                menu-toggle="left">
+            </button>
+</ion-nav-buttons> -->
+
+  <ion-nav-buttons side="right">
+    <button class="button button-large" ng-click="save()">Save</button>
+  </ion-nav-buttons>
+
+
+  <ion-content class="padding">
+    <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Product Name</span>
+          <input type="text" placeholder="Product Name" ng-model="controller.prod_name" required>
+        </label>
+        <div class="list">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Quantity</span>
+            <input type="number" placeholder="Quantity" step="1" ng-model="controller.quantity" required>
+          </label>
+      <!--    <div class="range">
+            <i> 0 </i>
+            <input type="range" min="0" max="10" step="1" ng-model="controller.quantity" required>
+            <i> 10 </i>
+          </div>-->
+        </div>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Price</span>
+          <input type="number" placeholder="Price" min="1" max="100000000000000" ng-model="controller.price" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Order Date</span>
+          <input type="date" ng-model="controller.order_date" required>
+        </label>
+        <label class="item item-input item-select" >
+          <div class="input-label">
+            Product Category
+          </div>
+          <select ng-model="controller.category" required>
+            <option selected> Food</option>
+            <option >Stationary</option>
+            <option>Clothing</option>
+          </select>
+        </label>
+      </div>
+  </ion-content>
+</ion-view>

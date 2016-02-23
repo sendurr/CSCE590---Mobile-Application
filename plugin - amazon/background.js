@@ -1,30 +1,12 @@
-
-/*chrome.tabs.query({
-    active: true,
-    currentWindow: true
-}, function(tabs) {
-    var tabURL = tabs[0].url;
-    console.log(tabURL);
-});*/
-
-/*function click(){
-	chrome.tabs.executeScript(null,{
-		code: "console.log('It worked')"
-	});
-}*/
-
-function click(){
-	chrome.tabs.query({active: true , currentWindow:true}, function(tabs){
-		console.log("background.js : \n");
-		var tab = tabs[0];
-		var url = tab.url;
-		console.log("The URL is" + url);
-		//document.getElementById("add-to-cart-button").click();
-		var title = document.title;
-		console.log("The URL title is " + title);
-	});
+function func_submit(){
+	for (i=0;i<data.length;i++){
+			alert(data[i]);
+	}
 }
 
 
-
-chrome.browserAction.onClicked.addListener(click);
+chrome.runtime.onMessage.addListener(function(response , sender , sendResponse){
+	data[index]=response.trim();
+	index = index+1;
+});
+chrome.browserAction.onClicked.addListener(func_submit);
