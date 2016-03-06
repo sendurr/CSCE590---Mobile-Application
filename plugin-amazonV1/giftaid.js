@@ -16,8 +16,36 @@ s.onload = function(){
     };
 document.head.appendChild(s);
 
+var s1 = document.createElement("script");
+s1.type = "text/javascript";
+s1.src = "http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip.min.js";
+document.head.appendChild(s1);
+
+
+
+
+
+/*items=document.getElementsByClassName("a-spacing-small item");
+console.log( items[2].innerHTML );
+console.log("There are " + items.length + " small pictures");
+large_items=document.getElementsByClassName("imgTagWrapper");
+console.log("There are " + large_items.length + " large pictures before");
+//items[0].click();
+//items[1].click();
+items[2].click();
+//items[3].click();
+//document.querySelector("#a-autoid-12 > span > input").click();
+large_items=document.getElementsByClassName("imgTagWrapper");
+console.log("There are " + large_items.length + " large pictures after");*/
+
+
+
+
 button.addEventListener ("click", function() {
- 
+
+		
+ 		//document.querySelector("#a-autoid-10 > span > input").click();
+ 		//alert("Computer Ji lock");
  		var mainimageurl , img_urls, title , price , elements, description, url, index , details , iFrameBody, imageurls=[] , indexlast , indexfirst;
 
  	// get the main product images
@@ -39,10 +67,16 @@ button.addEventListener ("click", function() {
 			indexlast=elements[i].innerHTML.lastIndexOf("\"");
 			indexfirst = elements[i].innerHTML.lastIndexOf("src");
 			temp=elements[i].innerHTML.substring(indexfirst+5 , indexlast)
-			imageurls.push(temp);		
+			if (temp.endsWith('jpg')) {
+				indexlast=temp.lastIndexOf(".");
+				temp=temp.substring(0,indexlast);
+				indexlast=temp.lastIndexOf(".");
+				temp=temp.substring(0,indexlast);
+				temp = temp + ".jpg";
+				imageurls.push(temp);
+			}
+		
 		}
-		elements=document.getElementsByClassName("imgTagWrapper");
-		console.log("There are " + elements.length + " pictures");
 
 		for (i=0;i<imageurls.length;i++){
 			console.log("Image url " + (i+1) + " " + imageurls[i] );
@@ -57,23 +91,36 @@ button.addEventListener ("click", function() {
 		img_urls=img_urls.trim();
 
 	// get the product descriptions
+		elements = document.getElementById("descriptionAndDetails");
 
-		getFrameContents();
-		description=iFrameBody.innerText;
-		description=description.trim();
-		console.log(description);
+		if (elements){
+			description=elements.innerText;
+			description=description.trim();
+			//console.log(description);
+		}
+		else{
+			getFrameContents();
+
+			//console.log(description);
+		}
+
 
 		function getFrameContents(){
 		   var iFrame =  document.getElementById('product-description-iframe');
-		   
-		   if ( iFrame.contentDocument ) 
-		   { // FF
-		     iFrameBody = iFrame.contentDocument.getElementsByTagName('body')[0];
+
+		   if (iFrame){
+			   if ( iFrame.contentDocument ) 
+			   { // FF
+			     iFrameBody = iFrame.contentDocument.getElementsByTagName('body')[0];
+			   }
+			   else if ( iFrame.contentWindow ) 
+			   { // IE
+			     iFrameBody = iFrame.contentWindow.document.getElementsByTagName('body')[0];
+			   }
+			   	description=iFrameBody.innerText;
+				description=description.trim();
 		   }
-		   else if ( iFrame.contentWindow ) 
-		   { // IE
-		     iFrameBody = iFrame.contentWindow.document.getElementsByTagName('body')[0];
-		   }
+		  
 		 }
 
 	// get the product details
@@ -83,7 +130,7 @@ button.addEventListener ("click", function() {
 		if (elements){
 			details=elements.innerText;
 			details=details.trim();
-			console.log(details);
+			//console.log(details);
 		}
 
 	// get the url of the page
@@ -94,20 +141,38 @@ button.addEventListener ("click", function() {
 			url=url.substring(0,index);
 		}
 
-		console.log(url);
+		//console.log(url);
 
 	// get the product title
 
-		elements = document.getElementsByClassName("a-size-large");
-		title=elements[0].textContent;
+		elements = document.getElementById("productTitle");
+		console.log(elements);
+		title=elements.innerText;
 		title=title.trim();
 		title = title.replace(',',' ');
+		console.log(title);
 
 	// get the product price
 
-		elements = document.getElementsByClassName("a-size-medium a-color-price");
-		price=elements[0].textContent;
+		priceSpan = document.getElementById("priceblock_ourprice");
+		if(!priceSpan){
+			priceSpan = document.getElementById("priceblock_saleprice"); 
+		}
+		console.log(priceSpan);
+		price=priceSpan.innerText;
 		price=price.trim();
+		price = price.replace('$','');
+		price = parseFloat(price);
+		console.log(price);
+
+
+		
+		if(! price){
+			elements = document.getElementsByClassName("a-size-medium a-color-price");
+			price=elements[0].textContent;
+			price=price.trim();
+		}
+		loadDB();
 
 		/*console.log("The picture is " + img_urls);
 		img_urls = img_urls.replace("{","");
@@ -128,17 +193,72 @@ button.addEventListener ("click", function() {
 
 	//	document.write('<script src="//www.parsecdn.com/js/parse-1.4.0.min.js"></script>');
 
+	function showmessage() {
+		e= document.createElement("div");
+		e.style.width = "90%";
+		e.style.height = "100px";
+		e.style.background = "green";
+		e.style.color = "white";
+		e.style.textAlign = "center";
+		e.innerHTML = 
+		'<div class="alert alert-success alert-dismissable">'+
+            'Import Success <br>' + 
+            'Title:'+title +"<br>"+
+            'Price:'+ price.toString()+ "<br>"+
+         '</div>';
+         // e.appendTo("#navbar");
+         div=document.getElementById("navbar");
+         div.appendChild(e);
+         // document.body.appendChild(e);
+	}
+
+		function showerror() {
+		e= document.createElement("div");
+		e.style.width = "90%";
+		e.style.height = "100px";
+		e.style.background = "red";
+		e.style.color = "white";
+		e.style.textAlign = "center";
+		e.innerHTML = 
+		'<div class="alert alert-success alert-dismissable">'+
+            'Import Failure <br>' + 
+            "Product already imported..<br>"+
+            
+         '</div>';
+         // e.appendTo("#navbar");
+         div=document.getElementById("navbar");
+         div.appendChild(e);
+         // document.body.appendChild(e);
+	}
+
+
 		function loadDB(){
 		
 			Parse.initialize("zqEF2wS6DZxsiDmoNenO2a40FzejoPBvHrEuADbt",
 	        "jwSZzqh4YGNu1ddY91dG4rvgqm2SrxWNX3xIqVFp");
 
-	        importProduct();
+			//first query if this item has been imported before by checking url
+			var Item = Parse.Object.extend("Item");
+			query= new Parse.Query(Item);
+			query.equalTo("url",url);
+			query.find().then(function(results){
+				if(results.length>0){
+					showerror();
+				}
+				else{
+					importProduct();
+				}
+			});
 
-	        function importProduct(){
+	        
+		}
+
+		function importProduct(){
 	            var Item = Parse.Object.extend("Item");
 	            var item =  new Item();
 	            item.set("title",title);
+	            words = title.split(" ");
+	            item.set("searchkeys",words);
 	            item.set("description",description);
 	            item.set("price",parseFloat(price));
 	            item.set("url",url)
@@ -167,6 +287,7 @@ button.addEventListener ("click", function() {
 	            item.save(null,{
 	                success:function(obj){
 	                    console.log("product imported successfully: "+obj.id);
+	                    showmessage();
 	                },
 	                error:function(obj,error){
 	                    console.log(error.message);
@@ -174,8 +295,8 @@ button.addEventListener ("click", function() {
 
 	            })
 	        }
-		}
-		loadDB();
+
+		
 
 
 /*		<script src="js/parse-1.4.0.min.js"></script>
